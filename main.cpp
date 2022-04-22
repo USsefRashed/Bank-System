@@ -37,7 +37,7 @@ int main()
     {
         operations(Client);
 
-        cout<<"Press any key to continue & (E/e) to exit : ";cin>>cont;
+        cout<<"Press any key to continue or (E/e) to exit : ";cin>>cont;
         if(cont=='e'||cont=='E')
         break;
     }

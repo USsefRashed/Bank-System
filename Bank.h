@@ -21,6 +21,9 @@ string getDateTime();
 void setAccounts();
 void getAccounts();
 void getById(int id);
+void ModifyById(int id);
+void DeleteById(int id);
+
 };
 
 Bank::Bank(int size)
@@ -56,7 +59,7 @@ bool Bank::isExist(int id)
 {
     for (int i = 0; i < Size; i++)
     {
-        if(Ids[i]==id)
+        if(Ids[i]==id && FirstName[id].empty()==false)
         return 1;
     }
     return 0;
@@ -72,7 +75,6 @@ string Bank::getDateTime()
 }
 
 void Bank::setAccounts(){
-    string name;
     for (int i = 0; i < Size; i++)
     {
         Ids[i]=++Id;
@@ -120,7 +122,7 @@ void Bank::getById(int id)
         while (true)
         {
             cout<<"Renter the client id : ";cin>>id;
-            if(!(id<=0 || id<Size))
+            if(!(id<0 || id<Size))
             break;
         }
     
@@ -138,5 +140,12 @@ void Bank::getById(int id)
     }
     
 }
+void Bank::ModifyById(int id)
+{
 
+}
+void Bank::DeleteById(int id)
+{
+
+}
 
