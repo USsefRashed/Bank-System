@@ -125,10 +125,18 @@ void Bank::getById(int id)
         }
     
     }
-    cout<<"ID : "<<Ids[id]<<endl;
-    cout<<"Client : "<<FirstName[id]<<endl;
-    cout<<"Balance :"<<Balance[id]<<endl;
-    cout<<"Date of process"<<Date[id]<<endl;
+    if (FirstName[id].empty()==true)
+    {
+        cout<<"There is no data for this id !"<<endl;
+    }
+    else
+    {
+        cout<<"ID : "<<Ids[id]<<endl;
+        cout<<"Client : "<<FirstName[id]<<endl;
+        cout<<"Balance :"<<Balance[id]<<endl;
+        cout<<"Date of process"<<Date[id]<<endl;
+    }
+    
 }
 
 
