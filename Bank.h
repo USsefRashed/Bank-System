@@ -12,7 +12,6 @@ protected:
     string *FirstName;
     string *LastName;
     string *Date;
-
 public:
 
 Bank(int size);
@@ -23,6 +22,9 @@ void getAccounts();
 void getById(int id);
 void ModifyById(int id);
 void DeleteById(int id);
+void ModifyFName(int id);
+void ModifyLName(int id);
+void ModifBalance(int id);
 
 };
 
@@ -59,7 +61,7 @@ bool Bank::isExist(int id)
 {
     for (int i = 0; i < Size; i++)
     {
-        if(Ids[i]==id && FirstName[id].empty()==false)
+        if(Ids[i]==id &&Ids[id]!=-1 && FirstName[id].empty()==false)
         return 1;
     }
     return 0;
@@ -84,6 +86,7 @@ void Bank::setAccounts(){
         cout<<"Enter the Client Last name : ";cin>>LastName[i];
         cout<<"Enter the Client Balance : ";cin>>Balance[i];
     }
+    Id++;
     
 }
 void Bank::getAccounts(){
@@ -142,10 +145,112 @@ void Bank::getById(int id)
 }
 void Bank::ModifyById(int id)
 {
+    char cho;
+    cout<<"\n============================================"<<endl;
+    cout<<"Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
+    cout<<"============================================"<<endl;
+    cin>>cho;
+    if (cho=='B'||cho=='b')
+    {
+        ModifBalance(id);
+        cout<<"Client is modified sucessfully !"<<endl;
 
+    }
+    else if(cho=='F'||cho=='f')
+    {
+        ModifyFName(id);
+        cout<<"Client is modified sucessfully !"<<endl;
+    }
+    else if(cho=='L'||cho=='l')
+    {
+        ModifyLName(id);
+        cout<<"Client is modified sucessfully !"<<endl;
+    
+    }
+    else{
+        cout<<"Invalid choice !"<<endl;
+    }
+    
 }
 void Bank::DeleteById(int id)
 {
-
+    if (isExist(id)==false)
+    {
+        cout<<"the client is not exist !"<<endl;
+    }
+    else
+    {
+        Ids[id]=-1;
+        FirstName[id].clear();
+        LastName[id].clear();
+        Balance[id]=-1;
+        cout<<"Client is deleted sucessfully !"<<endl;
+    }
+    
 }
 
+void Bank::ModifyFName(int id)
+{
+    try
+    {
+        if(isExist(id)==false)
+        {
+        throw "Sorry  this Client is not exist !";
+        }
+        else
+        {
+            string name;
+            cout<<"Enter the new First name of user : ";cin>>name;
+            FirstName[id]=name;
+        }
+
+    }
+    catch(const char*msg)
+    {
+        std::cerr <<msg<< '\n';
+    }
+    
+
+}
+void Bank::ModifyLName(int id)
+{
+        try
+    {
+        if(isExist(id)==false)
+        {
+        throw "Sorry  this Client is not exist !";
+        }
+        else
+        {
+            string name;
+            cout<<"Enter the new Last name of user : ";cin>>name;
+            LastName[id]=name;
+        }
+
+    }
+    catch(const char*msg)
+    {
+        std::cerr <<msg<< '\n';
+    }
+}
+void Bank::ModifBalance(int id)
+{
+        try
+    {
+        if(isExist(id)==false)
+        {
+        throw "Sorry  this Client is not exist !";
+        }
+        else
+        {
+            int balance;
+            cout<<"Enter the new balance of user : ";cin>>balance;
+            Balance[id]=balance;
+        }
+
+    }
+    catch(const char*msg)
+    {
+        std::cerr <<msg<< '\n';
+    }
+}

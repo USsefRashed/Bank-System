@@ -3,11 +3,12 @@
 #include"Bank.h"
 using namespace std;
 
-void operations(Bank Client)
+void operations(Bank &Client)
 {
     char ans;
     cout<<"@------Welcome to our Bank system ------@\n\n";
-    cout<<"-----------\nEnter : (A)dd Account\n-----------\nEnter : (I)Display Client by Id\n-----------\nEnter : (D)isplayAccounts\n-----------\n"<<endl;
+    cout<<"-----------\nEnter : (A)dd Account\n-----------\nEnter : (I)Display Client by Id\n-----------\nEnter : (D)isplay Accounts\n-----------\n(M)odify Account\n-----------\n"<<endl;
+    cout<<"(R)emove Client\n-----------\n";
     cin>>ans;
     if(ans=='d'||ans=='D')
     {
@@ -22,6 +23,18 @@ void operations(Bank Client)
         int id;
         cout<<"Enter the Client Id : ";cin>>id;
         Client.getById(id);
+    }
+    else if(ans=='m'||ans=='M')
+    {
+        int id;
+        cout<<"Enter Client ID : ";cin>>id;
+        Client.ModifyById(id);
+    }
+    else if(ans=='r'||ans=='R')
+    {
+        int id;
+        cout<<"Enter id to remove : ";cin>>id;
+        Client.DeleteById(id);
     }
     else
     {
