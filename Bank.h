@@ -2,6 +2,7 @@
 #include<array>
 #include<string>
 #include<ctime>
+#include <fstream>
 using namespace std;
 class Bank
 {
@@ -25,6 +26,7 @@ void DeleteById(int id);
 void ModifyFName(int id);
 void ModifyLName(int id);
 void ModifBalance(int id);
+void Writetxtfile();
 
 };
 
@@ -252,5 +254,39 @@ void Bank::ModifBalance(int id)
     catch(const char*msg)
     {
         std::cerr <<msg<< '\n';
+    }
+}
+
+
+void Bank::Writetxtfile() {
+
+    fstream filetxt;
+    filetxt.open("accounts" , ios::out);
+    if (filetxt.is_open()){
+        if(Id==-1)
+        {
+            filetxt<<"There is not accounts added yet !"<<endl;
+        }
+        else
+        {
+        filetxt<<"\n*--------------------ACCOUNTS--------------------*\n";
+            for (int i = 0; i < Size; i++)
+            {
+                if (FirstName[i].empty()==true)
+                {
+                    continue;
+                }
+                else
+                {
+                filetxt<<"\n==============================\n\n";
+                filetxt<<"Client Id : "<<Ids[i];
+                filetxt<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
+                filetxt<<"Balance : "<<Balance[i]<<endl;
+                filetxt<<"Process Date"<<Date[i];
+                filetxt<<"\n==============================\n\n";
+                }
+                
+            }
+        }
     }
 }

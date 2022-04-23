@@ -1,5 +1,8 @@
 #include<iostream>
+#include <bits\stdc++.h>
 #include<array>
+#include<conio.h>
+#include<string.h>
 #include"Bank.h"
 using namespace std;
 
@@ -50,9 +53,20 @@ int main()
     {
         operations(Client);
 
-        cout<<"Press any key to continue or (E/e) to exit : ";cin>>cont;
-        if(cont=='e'||cont=='E')
-        break;
+        cout<<"Press any key to continue or (E/e) to exit : ";
+        cont = getche();
+        system("cls");
+        if(cont=='e'||cont=='E'){
+            
+            cout << "you  want write accounts information in .txt file (y/n) ? ";
+            cont = tolower(getche());
+            if (cont == 'y' ){
+                Client.Writetxtfile();
+            }
+            
+            break;
+        }
+        
     }
     
 
