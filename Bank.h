@@ -279,7 +279,7 @@ void Bank::Writetxtfile() {
                 else
                 {
                 filetxt<<"\n==============================\n\n";
-                filetxt<<"Client Id : "<<Ids[i];
+                filetxt<<"Client Id : "<<Ids[i]<<endl;
                 filetxt<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
                 filetxt<<"Balance : "<<Balance[i]<<endl;
                 filetxt<<"Process Date"<<Date[i];
