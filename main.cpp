@@ -8,11 +8,12 @@ using namespace std;
 
 void operations(Bank &Client)
 {
+    //act as the interface of our system
     char ans;
     cout<<"@------Welcome to our Bank system ------@\n\n";
     cout<<"-----------\nEnter : (A)dd Account\n-----------\nEnter : (I)Display Client by Id\n-----------\nEnter : (D)isplay Accounts\n-----------\n(M)odify Account\n-----------\n"<<endl;
     cout<<"(R)emove Client\n-----------\n";
-    cin>>ans;
+    ans = getche();
     if(ans=='d'||ans=='D')
     {
         Client.getAccounts();
@@ -48,12 +49,14 @@ int main()
 {
     char cont;int size;
     cout<<"How Many Account You want to add : ";cin>>size;
-    Bank Client=Bank(size);
+    Bank Client(size);
     while (true)
     {
         operations(Client);
 
         cout<<"Press any key to continue or (E/e) to exit : ";
+
+        
         cont = getche();
         system("cls");
         if(cont=='e'||cont=='E'){
@@ -69,5 +72,5 @@ int main()
         
     }
     
-
+return 0;
 }

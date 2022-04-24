@@ -61,24 +61,25 @@ Bank::Bank(int size)
 
 bool Bank::isExist(int id)
 {
+    //to check if the account is exist on system or not
     for (int i = 0; i < Size; i++)
     {
-        if(Ids[i]==id &&Ids[id]!=-1 && FirstName[id].empty()==false)
-        return 1;
+        if(Ids[i]==id &&Ids[id]!=-1)
+            return 1;
     }
     return 0;
 }
 
 string Bank::getDateTime()
 {
+    //to detecte the time of adding process
     time_t now = time(0);
     char* dt = ctime(&now);
-    tm *gmtm = gmtime(&now);
-    dt = asctime(gmtm);
     return dt;
 }
 
 void Bank::setAccounts(){
+    //to input accounts to our system 
     for (int i = 0; i < Size; i++)
     {
         Ids[i]=++Id;
@@ -92,6 +93,7 @@ void Bank::setAccounts(){
     
 }
 void Bank::getAccounts(){
+    //to dispaly all accounts to adminstrator
     if(Id==-1)
     {
         cout<<"There is not accounts added yet !"<<endl;
@@ -101,7 +103,7 @@ void Bank::getAccounts(){
     cout<<"\n*--------------------ACCOUNTS--------------------*\n";
         for (int i = 0; i < Size; i++)
         {
-            if (FirstName[i].empty()==true)
+            if (FirstName[i].empty())
             {
                 continue;
             }
@@ -121,6 +123,7 @@ void Bank::getAccounts(){
 }
 void Bank::getById(int id)
 {
+    //to get client info by searching with id
     if(id<0 || id>Size)
     {
         cout<<"out of range !\n\n";
@@ -132,7 +135,7 @@ void Bank::getById(int id)
         }
     
     }
-    if (FirstName[id].empty()==true)
+    if (FirstName[id].empty())
     {
         cout<<"There is no data for this id !"<<endl;
     }
@@ -147,6 +150,7 @@ void Bank::getById(int id)
 }
 void Bank::ModifyById(int id)
 {
+    //to serach for account and modify it if is exist
     char cho;
     cout<<"\n============================================"<<endl;
     cout<<"Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
@@ -176,7 +180,8 @@ void Bank::ModifyById(int id)
 }
 void Bank::DeleteById(int id)
 {
-    if (isExist(id)==false)
+    //to remove account info from our system 
+    if (!isExist(id))
     {
         cout<<"the client is not exist !"<<endl;
     }
@@ -193,11 +198,12 @@ void Bank::DeleteById(int id)
 
 void Bank::ModifyFName(int id)
 {
+    //modify first name simutainously
     try
     {
-        if(isExist(id)==false)
+        if(!isExist(id))
         {
-        throw "Sorry  this Client is not exist !";
+        throw "Sorry this Client is not exist !";
         }
         else
         {
@@ -216,9 +222,10 @@ void Bank::ModifyFName(int id)
 }
 void Bank::ModifyLName(int id)
 {
+    //modify Last name simutainously
         try
     {
-        if(isExist(id)==false)
+        if(!isExist(id))
         {
         throw "Sorry  this Client is not exist !";
         }
@@ -237,9 +244,10 @@ void Bank::ModifyLName(int id)
 }
 void Bank::ModifBalance(int id)
 {
+    //modify Balance simutainously
         try
     {
-        if(isExist(id)==false)
+        if(!isExist(id))
         {
         throw "Sorry  this Client is not exist !";
         }
@@ -259,9 +267,10 @@ void Bank::ModifBalance(int id)
 
 
 void Bank::Writetxtfile() {
+    //to print all accounts on our system into account.txt (file)
 
     fstream filetxt;
-    filetxt.open("accounts" , ios::out);
+    filetxt.open("accounts.txt" , ios::app);
     if (filetxt.is_open()){
         if(Id==-1)
         {
@@ -289,4 +298,5 @@ void Bank::Writetxtfile() {
             }
         }
     }
+    filetxt.close();
 }
