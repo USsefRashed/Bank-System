@@ -7,7 +7,6 @@ using namespace std;
 class Bank
 {
 protected:
-
     int Id,*Ids,Size;
     double *Balance;
     string *FirstName;
@@ -27,16 +26,16 @@ void ModifyFName(int id);
 void ModifyLName(int id);
 void ModifBalance(int id);
 void Writetxtfile();
-
 };
 
 Bank::Bank(int size)
 {
+    
     try
     {
         if(size<=0)
         {
-            throw"Sorry the Accounts number should be larger than 0";
+            throw"\nSorry the Accounts number should be larger than 0";
         }
     }
     catch(const char* msg)
@@ -44,7 +43,7 @@ Bank::Bank(int size)
         while (true)
         {
         cerr << msg <<endl;
-        cout<<"Renter the number of accounts : "<<endl;
+        cout<<"\nRenter the number of accounts : "<<endl;
         cin>>size;
         if(!(size<=0))
         {break;}       
@@ -80,17 +79,18 @@ string Bank::getDateTime()
 
 void Bank::setAccounts(){
     //to input accounts to our system 
-    for (int i = 0; i < Size; i++)
-    {
-        Ids[i]=++Id;
-        Date[i]=getDateTime();
-        cout<<"Date of process : "<<Date[i];
-        cout<<"Enter the Client First name : ";cin>>FirstName[i];
-        cout<<"Enter the Client Last name : ";cin>>LastName[i];
-        cout<<"Enter the Client Balance : ";cin>>Balance[i];
-    }
-    Id++;
-    
+        ++Id;
+        if(Id<Size){
+        Ids[Id]=Id;
+        Date[Id]=getDateTime();
+        cout<<"Date of process : "<<Date[Id];
+        cout<<"Enter the Client First name : ";cin>>FirstName[Id];
+        cout<<"Enter the Client Last name : ";cin>>LastName[Id];
+        cout<<"Enter the Client Balance : ";cin>>Balance[Id];
+        }
+        else{
+            cout<<"\nSorry The list of client you specified its size is full !"<<endl;
+        }
 }
 void Bank::getAccounts(){
     //to dispaly all accounts to adminstrator
@@ -113,7 +113,7 @@ void Bank::getAccounts(){
             cout<<"Client Id : "<<Ids[i];
             cout<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
             cout<<"Balance : "<<Balance[i]<<endl;
-            cout<<"Process Date"<<Date[i];
+            cout<<"Process Date "<<Date[i];
             cout<<"\n==============================\n\n";
             }
             
@@ -124,16 +124,13 @@ void Bank::getAccounts(){
 void Bank::getById(int id)
 {
     //to get client info by searching with id
-    if(id<0 || id>Size)
+    if(id<0 || id>=Size)
     {
-        cout<<"out of range !\n\n";
-        while (true)
+        do
         {
+            cout<<"out of range !\n\n";
             cout<<"Renter the client id : ";cin>>id;
-            if(!(id<0 || id<Size))
-            break;
-        }
-    
+        } while (id<0 || id>=Size);
     }
     if (FirstName[id].empty())
     {
@@ -144,39 +141,40 @@ void Bank::getById(int id)
         cout<<"ID : "<<Ids[id]<<endl;
         cout<<"Client : "<<FirstName[id]<<endl;
         cout<<"Balance :"<<Balance[id]<<endl;
-        cout<<"Date of process"<<Date[id]<<endl;
+        cout<<"Date of process "<<Date[id]<<endl;
     }
     
 }
 void Bank::ModifyById(int id)
 {
     //to serach for account and modify it if is exist
+    if(isExist(id))
+    {
     char cho;
-    cout<<"\n============================================"<<endl;
-    cout<<"Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
-    cout<<"============================================"<<endl;
-    cin>>cho;
-    if (cho=='B'||cho=='b')
-    {
-        ModifBalance(id);
-        cout<<"Client is modified sucessfully !"<<endl;
-
-    }
-    else if(cho=='F'||cho=='f')
-    {
-        ModifyFName(id);
-        cout<<"Client is modified sucessfully !"<<endl;
-    }
-    else if(cho=='L'||cho=='l')
-    {
-        ModifyLName(id);
-        cout<<"Client is modified sucessfully !"<<endl;
-    
+        cout<<"\n============================================"<<endl;
+        cout<<"Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
+        cout<<"============================================"<<endl;
+        cin>>cho;
+        if (cho=='B'||cho=='b')
+        {
+            ModifBalance(id);
+        }
+        else if(cho=='F'||cho=='f')
+        {
+            ModifyFName(id);
+        }
+        else if(cho=='L'||cho=='l')
+        {
+            ModifyLName(id);
+        }
+        else{
+            cout<<"Invalid choice !"<<endl;
+        }
     }
     else{
-        cout<<"Invalid choice !"<<endl;
+        cout<<"There is no accounts regisetred to modify them !"<<endl;
     }
-    
+    cout<<"\n\n The end of modify mode..."<<endl;
 }
 void Bank::DeleteById(int id)
 {
@@ -270,7 +268,7 @@ void Bank::Writetxtfile() {
     //to print all accounts on our system into account.txt (file)
 
     fstream filetxt;
-    filetxt.open("accounts.txt" , ios::app);
+    filetxt.open("accounts.txt" , ios::out);
     if (filetxt.is_open()){
         if(Id==-1)
         {
@@ -291,10 +289,9 @@ void Bank::Writetxtfile() {
                 filetxt<<"Client Id : "<<Ids[i]<<endl;
                 filetxt<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
                 filetxt<<"Balance : "<<Balance[i]<<endl;
-                filetxt<<"Process Date"<<Date[i];
+                filetxt<<"Process Date "<<Date[i];
                 filetxt<<"\n==============================\n\n";
                 }
-                
             }
         }
     }

@@ -53,24 +53,17 @@ int main()
     while (true)
     {
         operations(Client);
-
         cout<<"Press any key to continue or (E/e) to exit : ";
-
-        
         cont = getche();
         system("cls");
         if(cont=='e'||cont=='E'){
-            
             cout << "you  want write accounts information in .txt file (y/n) ? ";
             cont = tolower(getche());
             if (cont == 'y' ){
                 Client.Writetxtfile();
             }
-            
             break;
         }
-        
     }
-    
 return 0;
 }
