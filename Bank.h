@@ -1,69 +1,74 @@
-#include<iostream>
-#include<array>
-#include<string>
-#include<ctime>
+#ifndef BANK_H
+#define BANK_H
+
+#include <iostream>
+#include <array>
+#include <string>
+#include <ctime>
 #include <fstream>
 using namespace std;
 class Bank
 {
 protected:
-    int Id,*Ids,Size;
+    int Id, *Ids, Size;
     double *Balance;
     string *FirstName;
     string *LastName;
     string *Date;
-public:
 
-Bank(int size);
-bool isExist(int id);
-string getDateTime();
-void setAccounts();
-void getAccounts();
-void getById(int id);
-void ModifyById(int id);
-void DeleteById(int id);
-void ModifyFName(int id);
-void ModifyLName(int id);
-void ModifBalance(int id);
-void Writetxtfile();
+public:
+    Bank(int size);
+    bool isExist(int id);
+    string getDateTime();
+    void setAccounts();
+    void getAccounts();
+    void getById(int id);
+    void ModifyById(int id);
+    void DeleteById(int id);
+    void ModifyFName(int id);
+    void ModifyLName(int id);
+    void ModifBalance(int id);
+    void Writetxtfile();
 };
 
 Bank::Bank(int size)
 {
-    
+
     try
     {
-        if(size<=0)
+        if (size <= 0)
         {
-            throw"\nSorry the Accounts number should be larger than 0";
+            throw "\nSorry the Accounts number should be larger than 0";
         }
     }
-    catch(const char* msg)
+    catch (const char *msg)
     {
         while (true)
         {
-        cerr << msg <<endl;
-        cout<<"\nRenter the number of accounts : "<<endl;
-        cin>>size;
-        if(!(size<=0))
-        {break;}       
+            cerr << msg << endl;
+            cout << "\nRenter the number of accounts : " << endl;
+            cin >> size;
+            if (!(size <= 0))
+            {
+                break;
+            }
         }
     }
-    Size=size;
-    Id=-1;
-    Ids=new int[Size];
-    FirstName=new string[Size];
-    LastName=new string[Size];
-    Balance=new double[Size];
-    Date=new string[Size];
+    Size = size;
+    Id = -1;
+    Ids = new int[Size];
+    FirstName = new string[Size];
+    LastName = new string[Size];
+    Balance = new double[Size];
+    Date = new string[Size];
 }
 
 bool Bank::isExist(int id)
 {
-    //to check if the account is exist on system or not
+    // to check if the account is exist on system or not
     for (int i = 0; i < Size; i++)
     {
-        if(Ids[i]==id &&Ids[id]!=-1)
+        if (Ids[i] == id && Ids[id] != -1)
             return 1;
     }
     return 0;
@@ -71,36 +76,43 @@ bool Bank::isExist(int id)
 
 string Bank::getDateTime()
 {
-    //to detecte the time of adding process
+    // to detecte the time of adding process
     time_t now = time(0);
-    char* dt = ctime(&now);
+    char *dt = ctime(&now);
     return dt;
 }
 
-void Bank::setAccounts(){
-    //to input accounts to our system 
-        ++Id;
-        if(Id<Size){
-        Ids[Id]=Id;
-        Date[Id]=getDateTime();
-        cout<<"Date of process : "<<Date[Id];
-        cout<<"Enter the Client First name : ";cin>>FirstName[Id];
-        cout<<"Enter the Client Last name : ";cin>>LastName[Id];
-        cout<<"Enter the Client Balance : ";cin>>Balance[Id];
-        }
-        else{
-            cout<<"\nSorry The list of client you specified its size is full !"<<endl;
-        }
-}
-void Bank::getAccounts(){
-    //to dispaly all accounts to adminstrator
-    if(Id==-1)
+void Bank::setAccounts()
+{
+    // to input accounts to our system
+    ++Id;
+    if (Id < Size)
     {
-        cout<<"There is not accounts added yet !"<<endl;
+        Ids[Id] = Id;
+        Date[Id] = getDateTime();
+        cout << "Date of process : " << Date[Id];
+        cout << "Enter the Client First name : ";
+        cin >> FirstName[Id];
+        cout << "Enter the Client Last name : ";
+        cin >> LastName[Id];
+        cout << "Enter the Client Balance : ";
+        cin >> Balance[Id];
     }
     else
     {
-    cout<<"\n*--------------------ACCOUNTS--------------------*\n";
+        cout << "\nSorry The list of client you specified its size is full !" << endl;
+    }
+}
+void Bank::getAccounts()
+{
+    // to dispaly all accounts to adminstrator
+    if (Id == -1)
+    {
+        cout << "There is not accounts added yet !" << endl;
+    }
+    else
+    {
+        cout << "\n*--------------------ACCOUNTS--------------------*\n";
         for (int i = 0; i < Size; i++)
         {
             if (FirstName[i].empty())
@@ -109,191 +121,191 @@ void Bank::getAccounts(){
             }
             else
             {
-            cout<<"\n==============================\n\n";
-            cout<<"Client Id : "<<Ids[i];
-            cout<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
-            cout<<"Balance : "<<Balance[i]<<endl;
-            cout<<"Process Date "<<Date[i];
-            cout<<"\n==============================\n\n";
+                cout << "\n==============================\n\n";
+                cout << "Client Id : " << Ids[i];
+                cout << "Client : " << FirstName[i] << " " << LastName[i] << endl;
+                cout << "Balance : " << Balance[i] << endl;
+                cout << "Process Date " << Date[i];
+                cout << "\n==============================\n\n";
             }
-            
         }
     }
-    
 }
 void Bank::getById(int id)
 {
-    //to get client info by searching with id
-    if(id<0 || id>=Size)
+    // to get client info by searching with id
+    if (id < 0 || id >= Size)
     {
         do
         {
-            cout<<"out of range !\n\n";
-            cout<<"Renter the client id : ";cin>>id;
-        } while (id<0 || id>=Size);
+            cout << "out of range !\n\n";
+            cout << "Renter the client id : ";
+            cin >> id;
+        } while (id < 0 || id >= Size);
     }
     if (FirstName[id].empty())
     {
-        cout<<"There is no data for this id !"<<endl;
+        cout << "There is no data for this id !" << endl;
     }
     else
     {
-        cout<<"ID : "<<Ids[id]<<endl;
-        cout<<"Client : "<<FirstName[id]<<endl;
-        cout<<"Balance :"<<Balance[id]<<endl;
-        cout<<"Date of process "<<Date[id]<<endl;
+        cout << "ID : " << Ids[id] << endl;
+        cout << "Client : " << FirstName[id] << endl;
+        cout << "Balance :" << Balance[id] << endl;
+        cout << "Date of process " << Date[id] << endl;
     }
-    
 }
 void Bank::ModifyById(int id)
 {
-    //to serach for account and modify it if is exist
-    if(isExist(id))
+    // to serach for account and modify it if is exist
+    if (isExist(id))
     {
-    char cho;
-        cout<<"\n============================================"<<endl;
-        cout<<"Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
-        cout<<"============================================"<<endl;
-        cin>>cho;
-        if (cho=='B'||cho=='b')
+        char cho;
+        cout << "\n============================================" << endl;
+        cout << "Which U want to modify ? \n (F)irstName\n(L)astName\n(B)alance\n";
+        cout << "============================================" << endl;
+        cin >> cho;
+        if (cho == 'B' || cho == 'b')
         {
             ModifBalance(id);
         }
-        else if(cho=='F'||cho=='f')
+        else if (cho == 'F' || cho == 'f')
         {
             ModifyFName(id);
         }
-        else if(cho=='L'||cho=='l')
+        else if (cho == 'L' || cho == 'l')
         {
             ModifyLName(id);
         }
-        else{
-            cout<<"Invalid choice !"<<endl;
+        else
+        {
+            cout << "Invalid choice !" << endl;
         }
-    }
-    else{
-        cout<<"There is no accounts regisetred to modify them !"<<endl;
-    }
-    cout<<"\n\n The end of modify mode..."<<endl;
-}
-void Bank::DeleteById(int id)
-{
-    //to remove account info from our system 
-    if (!isExist(id))
-    {
-        cout<<"the client is not exist !"<<endl;
     }
     else
     {
-        Ids[id]=-1;
+        cout << "There is no accounts regisetred to modify them !" << endl;
+    }
+    cout << "\n\n The end of modify mode..." << endl;
+}
+void Bank::DeleteById(int id)
+{
+    // to remove account info from our system
+    if (!isExist(id))
+    {
+        cout << "the client is not exist !" << endl;
+    }
+    else
+    {
+        Ids[id] = -1;
         FirstName[id].clear();
         LastName[id].clear();
-        Balance[id]=-1;
-        cout<<"Client is deleted sucessfully !"<<endl;
+        Balance[id] = -1;
+        cout << "Client is deleted sucessfully !" << endl;
     }
-    
 }
 
 void Bank::ModifyFName(int id)
 {
-    //modify first name simutainously
+    // modify first name simutainously
     try
     {
-        if(!isExist(id))
+        if (!isExist(id))
         {
-        throw "Sorry this Client is not exist !";
+            throw "Sorry this Client is not exist !";
         }
         else
         {
             string name;
-            cout<<"Enter the new First name of user : ";cin>>name;
-            FirstName[id]=name;
+            cout << "Enter the new First name of user : ";
+            cin >> name;
+            FirstName[id] = name;
         }
-
     }
-    catch(const char*msg)
+    catch (const char *msg)
     {
-        std::cerr <<msg<< '\n';
+        std::cerr << msg << '\n';
     }
-    
-
 }
 void Bank::ModifyLName(int id)
 {
-    //modify Last name simutainously
-        try
+    // modify Last name simutainously
+    try
     {
-        if(!isExist(id))
+        if (!isExist(id))
         {
-        throw "Sorry  this Client is not exist !";
+            throw "Sorry  this Client is not exist !";
         }
         else
         {
             string name;
-            cout<<"Enter the new Last name of user : ";cin>>name;
-            LastName[id]=name;
+            cout << "Enter the new Last name of user : ";
+            cin >> name;
+            LastName[id] = name;
         }
-
     }
-    catch(const char*msg)
+    catch (const char *msg)
     {
-        std::cerr <<msg<< '\n';
+        std::cerr << msg << '\n';
     }
 }
 void Bank::ModifBalance(int id)
 {
-    //modify Balance simutainously
-        try
+    // modify Balance simutainously
+    try
     {
-        if(!isExist(id))
+        if (!isExist(id))
         {
-        throw "Sorry  this Client is not exist !";
+            throw "Sorry  this Client is not exist !";
         }
         else
         {
             int balance;
-            cout<<"Enter the new balance of user : ";cin>>balance;
-            Balance[id]=balance;
+            cout << "Enter the new balance of user : ";
+            cin >> balance;
+            Balance[id] = balance;
         }
-
     }
-    catch(const char*msg)
+    catch (const char *msg)
     {
-        std::cerr <<msg<< '\n';
+        std::cerr << msg << '\n';
     }
 }
 
-
-void Bank::Writetxtfile() {
-    //to print all accounts on our system into account.txt (file)
+void Bank::Writetxtfile()
+{
+    // to print all accounts on our system into account.txt (file)
 
     fstream filetxt;
-    filetxt.open("accounts.txt" , ios::out);
-    if (filetxt.is_open()){
-        if(Id==-1)
+    filetxt.open("accounts.txt", ios::out);
+    if (filetxt.is_open())
+    {
+        if (Id == -1)
         {
-            filetxt<<"There is not accounts added yet !"<<endl;
+            filetxt << "There is not accounts added yet !" << endl;
         }
         else
         {
-        filetxt<<"\n*--------------------ACCOUNTS--------------------*\n";
+            filetxt << "\n*--------------------ACCOUNTS--------------------*\n";
             for (int i = 0; i < Size; i++)
             {
-                if (FirstName[i].empty()==true)
+                if (FirstName[i].empty() == true)
                 {
                     continue;
                 }
                 else
                 {
-                filetxt<<"\n==============================\n\n";
-                filetxt<<"Client Id : "<<Ids[i]<<endl;
-                filetxt<<"Client : "<<FirstName[i]<<" "<<LastName[i]<<endl;
-                filetxt<<"Balance : "<<Balance[i]<<endl;
-                filetxt<<"Process Date "<<Date[i];
-                filetxt<<"\n==============================\n\n";
+                    filetxt << "\n==============================\n\n";
+                    filetxt << "Client Id : " << Ids[i] << endl;
+                    filetxt << "Client : " << FirstName[i] << " " << LastName[i] << endl;
+                    filetxt << "Balance : " << Balance[i] << endl;
+                    filetxt << "Process Date " << Date[i];
+                    filetxt << "\n==============================\n\n";
                 }
             }
         }
     }
     filetxt.close();
 }
+
+#endif
